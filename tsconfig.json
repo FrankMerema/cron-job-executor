@@ -10,6 +10,14 @@
     "baseUrl": "./src",
     "lib": [
       "es2017"
-    ]
+    ],
+    "paths": {
+      "@api": [
+        "api"
+      ],
+      "@models": [
+        "models"
+      ]
+    }
   }
 }

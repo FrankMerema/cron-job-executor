@@ -3,7 +3,15 @@
   "version": "0.0.1",
   "description": "NodeJS weather api for openweather.org",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc",
+    "start:dev": "nodemon",
+    "start:debug": "nodemon --config nodemon-debug.json",
+    "prestart:prod": "rimraf dist && npm run build",
+    "start:prod": "node dist/start.js",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "test": "jest"
+  },
   "repository": {
     "type": "git",
     "url": "git+https@github.com:FrankMerema/weather-service.git"
@@ -15,6 +23,26 @@
   },
   "homepage": "https://github.com/FrankMerema/weather-service#readme",
   "dependencies": {
-    "axios": "^0.19.0"
+    "axios": "0.19.0",
+    "body-parser": "1.19.0",
+    "express": "4.17.1",
+    "express-rate-limit": "latest",
+    "helmet": "latest"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.0",
+    "@types/express-rate-limit": "3.3.1",
+    "@types/helmet": "0.0.43",
+    "@types/jest": "24.0.15",
+    "@types/node": "12.6.8",
+    "jest": "24.8.0",
+    "nodemon": "1.19.1",
+    "prettier": "1.18.2",
+    "rimraf": "2.6.3",
+    "ts-jest": "24.0.2",
+    "ts-node": "8.3.0",
+    "tsconfig-paths": "3.8.0",
+    "tslint": "5.18.0",
+    "typescript": "3.5.3"
   }
 }
