@@ -1,5 +1,6 @@
 /* tslint:disable */
-import { Request, Response } from 'express';
+import { CityRoutes, StatusRoutes, WeatherRoutes } from '@routes';
+import { Request } from 'express';
 import RateLimit = require('express-rate-limit');
 import helmet = require('helmet');
 
@@ -19,19 +20,13 @@ export function start() {
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each IP to 100 requests per windowMs
     onLimitReached(req: Request): void {
-      console.info(`Received to many requests from ${req.ip}`);
+      console.error(`Received to many requests from ${req.ip}`);
     }
   }));
 
-  // app.use('/api/weather', new WeatherRoutes(weatherHandler).getRouter());
-
-  app.get('/', (req: Request, res: Response) => {
-    res.json({ status: 'OK' });
-  });
-
-  app.get('/api/status', (req: Request, res: Response) => {
-    res.json({ status: 'OK' });
-  });
+  app.use('/', new StatusRoutes().getRouter());
+  app.use('/api/city', new CityRoutes().getRouter());
+  app.use('/api/weather', new WeatherRoutes().getRouter());
 
   app.listen(port, () => {
     console.log(`Express app started at ${new Date()} and listening on port ${port}!`);
