@@ -11,12 +11,22 @@
     "lib": [
       "es2017"
     ],
+    "types": [
+      "@types/node",
+      "@types/jest"
+    ],
     "paths": {
       "@api": [
         "api"
       ],
       "@models": [
         "models"
+      ],
+      "@routes": [
+        "routes"
+      ],
+      "@handlers": [
+        "handlers"
       ]
     }
   }
