@@ -31,4 +31,6 @@ export function start() {
   app.listen(port, () => {
     console.log(`Express app started at ${new Date()} and listening on port ${port}!`);
   });
+
+  return app;
 }
