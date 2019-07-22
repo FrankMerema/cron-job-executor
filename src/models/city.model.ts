@@ -6,7 +6,7 @@ import { WeatherStation } from './weather-station.model';
 
 export interface City {
   id: number;
-  coord: Coordinates
+  coord: Coordinates;
   country: string;
   geoname: GeoName;
   langs: CityLanguage[];

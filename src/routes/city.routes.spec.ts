@@ -1,10 +1,9 @@
 import request from 'supertest';
 import { start } from '../server';
 
-const app = start();
-
 describe('CityHandler', () => {
 
+  let app: any;
   const weert = {
     id: 2744911,
     coord: {
@@ -286,6 +285,14 @@ describe('CityHandler', () => {
     ],
     zoom: 12
   };
+
+  beforeAll(() => {
+    app = start();
+  });
+
+  afterAll(() => {
+    app.close();
+  });
 
   describe('find city by name', () => {
     test('find 1 city for the name \'Nederweert\'', async () => {

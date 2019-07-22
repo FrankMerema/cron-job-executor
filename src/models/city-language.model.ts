@@ -1,3 +1,3 @@
 export interface CityLanguage {
-  [key: string]: string
+  [key: string]: string;
 }

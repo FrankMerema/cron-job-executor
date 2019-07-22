@@ -7,7 +7,8 @@ export class StatusHandler {
       .then(() => {
         return { openWeatherMap: 'ONLINE' };
       }).catch(err => {
-        console.log(err);
+        /* tslint:disable-next-line */
+        console.error(err);
         return { openWeatherMap: 'OFFLINE' };
       });
   }

@@ -21,7 +21,6 @@ export class CityRoutes {
     this.router.get('/id/:id', (req: Request, res: Response) => this.getCityById(req, res));
   }
 
-
   private getCityByCriteria(req: Request, res: Response): void {
     this.cityHandler.findCitiesByName(req.params.name)
       .then(cities => {
