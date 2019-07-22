@@ -31,5 +31,10 @@
     "object-literal-sort-keys": false,
     "trailing-comma": false
   },
-  "rulesDirectory": []
+  "linterOptions": {
+    "exclude": [
+      "coverage",
+      "**/*.js"
+    ]
+  }
 }

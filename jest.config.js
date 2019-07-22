@@ -6,10 +6,14 @@ module.exports = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   moduleFileExtensions: [
     'js',
+    'json',
     'ts'
   ],
   rootDir: 'src',
   testRegex: '.spec.ts$',
+  setupFiles: [
+    '../jest-spec-mock'
+  ],
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest'
   },

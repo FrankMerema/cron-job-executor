@@ -1,6 +1,8 @@
 .idea
 *.iml
 /service.config.json
+yarn.lock
+package-lock.json
 
 # Created by .ignore support plugin (hsz.mobi)
 ### macOS template
