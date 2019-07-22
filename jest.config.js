@@ -1,4 +1,8 @@
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const { compilerOptions } = require('./tsconfig');
+
 module.exports = {
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   moduleFileExtensions: [
     'js',
     'json',
@@ -9,6 +13,10 @@ module.exports = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest'
   },
+  collectCoverage: true,
+  collectCoverageFrom: [
+    '**/*.ts'
+  ],
   coverageDirectory: '../coverage',
   testEnvironment: 'node'
 };
