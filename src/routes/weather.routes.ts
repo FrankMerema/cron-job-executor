@@ -23,7 +23,6 @@ export class WeatherRoutes {
     this.router.get('/cityZip/:zip/:country', (req: Request, res: Response) => this.getWeatherByZip(req, res));
   }
 
-
   private getWeatherByCityName(req: Request, res: Response): void {
     this.weatherHandler.fetchWeatherForCityByCityName(req.params.name)
       .then(weather => {

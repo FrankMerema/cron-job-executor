@@ -28,9 +28,7 @@ export function start() {
   app.use('/api/city', new CityRoutes().getRouter());
   app.use('/api/weather', new WeatherRoutes().getRouter());
 
-  app.listen(port, () => {
+  return app.listen(port, () => {
     console.log(`Express app started at ${new Date()} and listening on port ${port}!`);
   });
-
-  return app;
 }
