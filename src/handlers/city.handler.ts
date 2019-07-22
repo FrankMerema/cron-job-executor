@@ -13,13 +13,13 @@ export class CityHandler {
     });
   }
 
-  findCitiesById(cityId: string): Promise<City[]> {
+  findCityById(cityId: string): Promise<City> {
     const cities = require('../assets/current.city.list.min.json') as City[];
 
     return new Promise((resolve, reject) => {
-      const found = cities.filter(city => city.id === parseInt(cityId, 10));
+      const found = cities.find(city => city.id === parseInt(cityId, 10));
 
-      found.length > 0 ? resolve(found) : reject({ error: `No cities found for ${cityId}` });
+      found ? resolve(found) : reject({ error: `No cities found for ${cityId}` });
     });
   }
 }
