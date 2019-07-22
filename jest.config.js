@@ -20,6 +20,6 @@ module.exports = {
     '!**/server.ts',
     '**/*.ts'
   ],
-  coverageDirectory: './coverage/jest/lcov',
+  coverageDirectory: '../coverage/jest/lcov',
   testEnvironment: 'node'
 };
