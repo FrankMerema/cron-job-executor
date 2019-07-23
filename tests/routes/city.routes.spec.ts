@@ -1,7 +1,7 @@
 import request from 'supertest';
-import { start } from '../server';
+import { start } from '../../src/server';
 
-describe('CityHandler', () => {
+describe('CityRoutes', () => {
 
   let app: any;
   const weert = {
