@@ -5,37 +5,25 @@ export class WeatherHandler {
 
   fetchWeatherForCityByCityName(cityName: string): Promise<OpenWeather> {
     return WeatherService.fetchWeatherForCityByCityName(cityName)
-      .then(openWeather => {
-        return openWeather.data;
-      }).catch(err => {
-        return err;
-      });
+      .then(openWeather => openWeather.data)
+      .catch(err => err);
   }
 
-  fetchWeatherForCityById(cityId: number): Promise<OpenWeather> {
+  fetchWeatherForCityById(cityId: string): Promise<OpenWeather> {
     return WeatherService.fetchWeatherForCityById(cityId)
-      .then(openWeather => {
-        return openWeather.data;
-      }).catch(err => {
-        return err;
-      });
+      .then(openWeather => openWeather.data)
+      .catch(err => err);
   }
 
-  fetchWeatherForCityByCoordinates(lon: number, lat: number): Promise<OpenWeather> {
+  fetchWeatherForCityByCoordinates(lon: string, lat: string): Promise<OpenWeather> {
     return WeatherService.fetchWeatherForCityByCoordinates(lon, lat)
-      .then(openWeather => {
-        return openWeather.data;
-      }).catch(err => {
-        return err;
-      });
+      .then(openWeather => openWeather.data)
+      .catch(err => err);
   }
 
   fetchWeatherForCityByZip(zip: string, countryAbbreviation: string): Promise<OpenWeather> {
     return WeatherService.fetchWeatherForCityByZip(zip, countryAbbreviation)
-      .then(openWeather => {
-        return openWeather.data;
-      }).catch(err => {
-        return err;
-      });
+      .then(openWeather => openWeather.data)
+      .catch(err => err);
   }
 }

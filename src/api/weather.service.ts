@@ -15,7 +15,7 @@ export class WeatherService {
     });
   }
 
-  static fetchWeatherForCityById(cityId: number): AxiosPromise<OpenWeather> {
+  static fetchWeatherForCityById(cityId: string): AxiosPromise<OpenWeather> {
     return axios.get<OpenWeather>(this.WEATHER_URL, {
       params: {
         id: cityId,
@@ -24,7 +24,7 @@ export class WeatherService {
     });
   }
 
-  static fetchWeatherForCityByCoordinates(lon: number, lat: number): AxiosPromise<OpenWeather> {
+  static fetchWeatherForCityByCoordinates(lon: string, lat: string): AxiosPromise<OpenWeather> {
     return axios.get<OpenWeather>(this.WEATHER_URL, {
       params: {
         lon,
