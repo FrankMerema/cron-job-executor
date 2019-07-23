@@ -83,9 +83,7 @@ describe('WeatherRoutes', () => {
   });
 
   describe('fetch weather', () => {
-
-    describe('sucessful', () => {
-
+    describe('successful', () => {
       test('via /cityName/:name endpoint', async () => {
         const response = await request(app).get('/api/weather/cityName/weert');
 
