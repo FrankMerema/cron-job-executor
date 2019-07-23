@@ -19,7 +19,7 @@ export class CityHandler {
     return new Promise((resolve, reject) => {
       const found = cities.find(city => city.id === parseInt(cityId, 10));
 
-      found ? resolve(found) : reject({ error: `No cities found for ${cityId}` });
+      found ? resolve(found) : reject({ error: `No city found for ${cityId}` });
     });
   }
 }
