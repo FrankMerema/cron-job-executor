@@ -10,6 +10,7 @@ export interface OpenWeather {
   clouds: Clouds;
   dt: number;
   sys: OpenWeatherSys;
+  timezone: number;
   id: string;
   name: string;
   cod: number;
