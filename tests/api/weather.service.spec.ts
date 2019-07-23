@@ -1,4 +1,4 @@
-import { WeatherService } from '@api';
+import { WeatherService } from '../../src/api';
 
 jest.mock('axios');
 

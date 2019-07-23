@@ -1,4 +1,4 @@
-import { StatusHandler } from '@handlers';
+import { StatusHandler } from '../../src/handlers';
 
 jest.mock('@frankmerema/is-port-reachable');
 

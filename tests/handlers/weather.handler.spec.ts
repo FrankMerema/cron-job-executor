@@ -1,5 +1,5 @@
-import { WeatherService } from '@api';
-import { WeatherHandler } from '@handlers';
+import { WeatherService } from '../../src/api';
+import { WeatherHandler } from '../../src/handlers';
 
 const weatherResult = {
   coord: {

@@ -1,5 +1,5 @@
-import { CityHandler } from '@handlers';
 import { Request, Response, Router } from 'express';
+import { CityHandler } from '../handlers';
 
 export class CityRoutes {
 

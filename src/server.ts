@@ -1,11 +1,11 @@
 /* tslint:disable */
-import { CityRoutes, StatusRoutes, WeatherRoutes } from '@routes';
 import { Request } from 'express';
-import RateLimit = require('express-rate-limit');
-import helmet = require('helmet');
+import { CityRoutes, StatusRoutes, WeatherRoutes } from './routes';
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const RateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const app = express();
 
 const config = require('../service.config.json');

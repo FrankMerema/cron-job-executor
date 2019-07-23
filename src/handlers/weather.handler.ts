@@ -1,5 +1,5 @@
-import { WeatherService } from '@api';
-import { OpenWeather } from '@models';
+import { WeatherService } from '../api';
+import { OpenWeather } from '../models';
 
 export class WeatherHandler {
 

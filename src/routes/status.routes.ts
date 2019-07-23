@@ -1,5 +1,5 @@
-import { StatusHandler } from '@handlers';
 import { Request, Response, Router } from 'express';
+import { StatusHandler } from '../handlers';
 
 export class StatusRoutes {
 

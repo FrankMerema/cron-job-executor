@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 /* tslint:disable */
-require('./server').start();
+require('../src/server').start();

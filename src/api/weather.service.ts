@@ -1,5 +1,5 @@
-import { OpenWeather } from '@models';
 import axios, { AxiosPromise } from 'axios';
+import { OpenWeather } from '../models';
 
 export class WeatherService {
 

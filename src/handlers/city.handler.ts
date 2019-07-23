@@ -1,4 +1,4 @@
-import { City } from '@models';
+import { City } from '../models';
 
 export class CityHandler {
 

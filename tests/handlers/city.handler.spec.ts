@@ -1,4 +1,4 @@
-import { CityHandler } from '@handlers';
+import { CityHandler } from '../../src/handlers';
 
 describe('CityHandler', () => {
 

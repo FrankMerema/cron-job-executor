@@ -1,5 +1,5 @@
-import { WeatherHandler } from '@handlers';
 import { Request, Response, Router } from 'express';
+import { WeatherHandler } from '../handlers';
 
 export class WeatherRoutes {
 
