@@ -10,7 +10,7 @@
     "prestart:prod": "rimraf dist && npm run build",
     "start:prod": "node dist/start.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "test": "rimraf coverage && jest"
+    "test": "rimraf coverage && jest --runInBand"
   },
   "repository": {
     "type": "git",
