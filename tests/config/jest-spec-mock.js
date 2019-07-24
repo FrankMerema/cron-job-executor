@@ -1,6 +1,6 @@
-jest.mock('../../service.config.json', () => ({
-  port: 1234,
-  openWeatherMap: {
-    secretKey: 'abc'
-  }
-}), { virtual: true });
+jest.mock('../../src/utils/config-reader.util');
+
+const getConfigFile = require('../../src/utils/config-reader.util').getConfigFile;
+
+
+getConfigFile.mockImplementation(() => ({ serverPort: 1234 }));

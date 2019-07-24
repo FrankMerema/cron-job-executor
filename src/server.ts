@@ -1,6 +1,7 @@
 /* tslint:disable */
 import { Request } from 'express';
 import { CityRoutes, StatusRoutes, WeatherRoutes } from './routes';
+import { getConfigFile } from './utils/config-reader.util';
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -8,10 +9,16 @@ const RateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const app = express();
 
-const config = require('../service.config.json');
-
 export function start() {
-  const port = config.serverPort || 8080;
+  let port = 8080;
+
+  const configFile = getConfigFile();
+
+  if (configFile.serverPort) {
+    port = configFile.serverPort;
+  } else {
+    console.warn(`No \`serverPort\` property found, falling back to default ${port}`);
+  }
 
   app.use(helmet());
   app.use(bodyParser.json());

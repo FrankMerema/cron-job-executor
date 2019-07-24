@@ -1,5 +1,7 @@
+import { AxiosError } from 'axios';
 import { Request, Response, Router } from 'express';
 import { WeatherHandler } from '../handlers';
+import { WeatherError } from '../models';
 
 export class WeatherRoutes {
 
@@ -28,7 +30,7 @@ export class WeatherRoutes {
       .then(weather => {
         res.json(weather);
       }).catch(error => {
-      res.status(404).json(error);
+      res.status(error.response.status).json(this.handleError(error));
     });
   }
 
@@ -37,7 +39,7 @@ export class WeatherRoutes {
       .then(weather => {
         res.json(weather);
       }).catch(error => {
-      res.status(404).json(error);
+      res.status(error.response.status).json(this.handleError(error));
     });
   }
 
@@ -46,7 +48,7 @@ export class WeatherRoutes {
       .then(weather => {
         res.json(weather);
       }).catch(error => {
-      res.status(404).json(error);
+      res.status(error.response.status).json(this.handleError(error));
     });
   }
 
@@ -55,7 +57,18 @@ export class WeatherRoutes {
       .then(weather => {
         res.json(weather);
       }).catch(error => {
-      res.status(404).json(error);
+      res.status(error.response.status).json(this.handleError(error));
     });
+  }
+
+  private handleError(error: AxiosError): WeatherError {
+    const message401 = 'Invalid API key! Did exceeded your limits || provided a correct `openWeatherMapKey` in your config?';
+
+    return {
+      code: error.response.status,
+      statusText: error.response.statusText,
+      message: error.response.status === 401 ?
+        message401 : error.response.data.message
+    };
   }
 }

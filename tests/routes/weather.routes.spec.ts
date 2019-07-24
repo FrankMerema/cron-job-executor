@@ -118,13 +118,39 @@ describe('WeatherRoutes', () => {
     });
 
     describe('failing', () => {
-      const customRes = { error: 'Not reachable...' };
+      const customRes404 = {
+        config: {},
+        code: 404,
+        response: {
+          data: {
+            message: 'API not valid, because of test'
+          },
+          status: 404,
+          statusText: 'Not reachable...',
+          headers: {},
+          config: {}
+        }
+      };
+
+      const customRes401 = {
+        config: {},
+        code: 401,
+        response: {
+          data: {
+            message: 'API not valid, because of test'
+          },
+          status: 401,
+          statusText: 'Not reachable...',
+          headers: {},
+          config: {}
+        }
+      };
 
       beforeEach(() => {
-        fetchWeatherForCityByCityNameMock.mockRejectedValueOnce(customRes);
-        fetchWeatherForCityByIdMock.mockRejectedValueOnce(customRes);
-        fetchWeatherForCityByCoordinatesMock.mockRejectedValueOnce(customRes);
-        fetchWeatherForCityByZipMock.mockRejectedValueOnce(customRes);
+        fetchWeatherForCityByCityNameMock.mockRejectedValueOnce(customRes404);
+        fetchWeatherForCityByIdMock.mockRejectedValueOnce(customRes404);
+        fetchWeatherForCityByCoordinatesMock.mockRejectedValueOnce(customRes401);
+        fetchWeatherForCityByZipMock.mockRejectedValueOnce(customRes401);
       });
 
       test('via /cityName/:name endpoint', async () => {
@@ -132,7 +158,7 @@ describe('WeatherRoutes', () => {
 
         expect(fetchWeatherForCityByCityNameMock).toHaveBeenCalledWith('weert');
         expect(response.status).toEqual(404);
-        expect(response.body).toEqual(customRes);
+        expect(response.body).toEqual({ code: 404, message: customRes404.response.data.message, statusText: customRes404.response.statusText });
       });
 
       test('via /cityId/:id endpoint', async () => {
@@ -140,23 +166,31 @@ describe('WeatherRoutes', () => {
 
         expect(fetchWeatherForCityByIdMock).toHaveBeenCalledWith('2744911');
         expect(response.status).toEqual(404);
-        expect(response.body).toEqual(customRes);
+        expect(response.body).toEqual({ code: 404, message: customRes404.response.data.message, statusText: customRes404.response.statusText });
       });
 
       test('via /cityCoordinates/:lon/:lat endpoint', async () => {
         const response = await request(app).get('/api/weather/cityCoordinates/5.70694/51.251671');
 
         expect(fetchWeatherForCityByCoordinatesMock).toHaveBeenCalledWith('5.70694', '51.251671');
-        expect(response.status).toEqual(404);
-        expect(response.body).toEqual(customRes);
+        expect(response.status).toEqual(401);
+        expect(response.body).toEqual({
+          code: 401,
+          message: 'Invalid API key! Did exceeded your limits || provided a correct `openWeatherMapKey` in your config?',
+          statusText: customRes404.response.statusText
+        });
       });
 
       test('via /cityZip/:zip/:country endpoint', async () => {
         const response = await request(app).get('/api/weather/cityZip/6002/nl');
 
         expect(fetchWeatherForCityByZipMock).toHaveBeenCalledWith('6002', 'nl');
-        expect(response.status).toEqual(404);
-        expect(response.body).toEqual(customRes);
+        expect(response.status).toEqual(401);
+        expect(response.body).toEqual({
+          code: 401,
+          message: 'Invalid API key! Did exceeded your limits || provided a correct `openWeatherMapKey` in your config?',
+          statusText: customRes404.response.statusText
+        });
       });
     });
   });

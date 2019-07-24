@@ -62,23 +62,23 @@ describe('WeatherService', () => {
 
       await expect(WeatherService.fetchWeatherForCityByCityName('weert')).resolves.toEqual(axiosResponse);
     });
-  });
 
-  test('for a city by id', async () => {
-    axios.get.mockResolvedValue(axiosResponse);
+    test('for a city by id', async () => {
+      axios.get.mockResolvedValue(axiosResponse);
 
-    await expect(WeatherService.fetchWeatherForCityById('123456')).resolves.toEqual(axiosResponse);
-  });
+      await expect(WeatherService.fetchWeatherForCityById('123456')).resolves.toEqual(axiosResponse);
+    });
 
-  test('for a city by coordinates', async () => {
-    axios.get.mockResolvedValue(axiosResponse);
+    test('for a city by coordinates', async () => {
+      axios.get.mockResolvedValue(axiosResponse);
 
-    await expect(WeatherService.fetchWeatherForCityByCoordinates('5.1', '12.5')).resolves.toEqual(axiosResponse);
-  });
+      await expect(WeatherService.fetchWeatherForCityByCoordinates('5.1', '12.5')).resolves.toEqual(axiosResponse);
+    });
 
-  test('for a city by zip', async () => {
-    axios.get.mockResolvedValue(axiosResponse);
+    test('for a city by zip', async () => {
+      axios.get.mockResolvedValue(axiosResponse);
 
-    await expect(WeatherService.fetchWeatherForCityByZip('1234', 'nl')).resolves.toEqual(axiosResponse);
+      await expect(WeatherService.fetchWeatherForCityByZip('1234', 'nl')).resolves.toEqual(axiosResponse);
+    });
   });
 });
