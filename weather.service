@@ -1,0 +1,11 @@
+[Unit]
+Description=Weather Service
+After=network.target
+
+[Service]
+Restart=on-failure
+User=root
+ExecStart=/usr/local/bin/weather-service --config /usr/local/bin/weather-service.config.json
+
+[Install]
+WantedBy=multi-user.target

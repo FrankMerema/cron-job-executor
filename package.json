@@ -3,10 +3,14 @@
   "version": "0.0.1",
   "description": "NodeJS weather api for openweather.org",
   "main": "dist/bin/start.js",
+  "bin": {
+    "weather-service": "dist/bin/start.js"
+  },
   "scripts": {
     "build": "rimraf dist && tsc",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
+    "start:prod": "node dist/bin/start.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "rimraf coverage && jest --runInBand"
   },
