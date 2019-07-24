@@ -1,5 +1,5 @@
-import { CityHandler } from '@handlers';
 import { Request, Response, Router } from 'express';
+import { CityHandler } from '../handlers';
 
 export class CityRoutes {
 
@@ -31,9 +31,9 @@ export class CityRoutes {
   }
 
   private getCityById(req: Request, res: Response): void {
-    this.cityHandler.findCitiesById(req.params.id)
-      .then(cities => {
-        res.json(cities);
+    this.cityHandler.findCityById(req.params.id)
+      .then(city => {
+        res.json(city);
       }).catch(error => {
       res.status(404).json(error);
     });

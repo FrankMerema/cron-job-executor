@@ -1,5 +1,5 @@
-import { StatusHandler } from '@handlers';
 import { Request, Response, Router } from 'express';
+import { StatusHandler } from '../handlers';
 
 export class StatusRoutes {
 
@@ -26,8 +26,8 @@ export class StatusRoutes {
     this.statusHandler.checkIfOpenWeatherMapIsOnline()
       .then(status => {
         res.json(status);
-      }).catch(() => {
-      res.status(404).json({ error: 'Something went wrong when checking statuses' });
+      }).catch(status => {
+      res.status(404).json(status);
     });
   }
 }

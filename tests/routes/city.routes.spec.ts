@@ -1,7 +1,7 @@
 import request from 'supertest';
-import { start } from '../server';
+import { start } from '../../src/server';
 
-describe('CityHandler', () => {
+describe('CityRoutes', () => {
 
   let app: any;
   const weert = {
@@ -295,7 +295,7 @@ describe('CityHandler', () => {
   });
 
   describe('find city by name', () => {
-    test('find 1 city for the name \'Nederweert\'', async () => {
+    test('find 1 city for the name \'nederweert\'', async () => {
       const response = await request(app).get('/api/city/name/nederweert');
 
       expect(response.status).toEqual(200);
@@ -320,6 +320,32 @@ describe('CityHandler', () => {
       expect(response.status).toEqual(404);
       expect(response.header['content-type']).toEqual('application/json; charset=utf-8');
       expect(JSON.parse(response.text)).toEqual({ error: 'No cities found for asdfasdfd' });
+    });
+  });
+
+  describe('find city by id', () => {
+    test('find \'nederweert\' for the id 2750467', async () => {
+      const response = await request(app).get('/api/city/id/2750467');
+
+      expect(response.status).toEqual(200);
+      expect(response.header['content-type']).toEqual('application/json; charset=utf-8');
+      expect(response.body).toEqual(nederweert);
+    });
+
+    test('find \'weert\' for the id 2744911', async () => {
+      const response = await request(app).get('/api/city/id/2744911');
+
+      expect(response.status).toEqual(200);
+      expect(response.header['content-type']).toEqual('application/json; charset=utf-8');
+      expect(response.body).toEqual(weert);
+    });
+
+    test('should return error message if no cities found', async () => {
+      const response = await request(app).get('/api/city/id/99999999999999');
+
+      expect(response.status).toEqual(404);
+      expect(response.header['content-type']).toEqual('application/json; charset=utf-8');
+      expect(JSON.parse(response.text)).toEqual({ error: 'No city found for 99999999999999' });
     });
   });
 });

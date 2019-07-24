@@ -2,15 +2,13 @@
   "name": "@frankmerema/weatherservice",
   "version": "0.0.1",
   "description": "NodeJS weather api for openweather.org",
-  "main": "index.js",
+  "main": "dist/bin/start.js",
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
-    "prestart:prod": "rimraf dist && npm run build",
-    "start:prod": "node dist/start.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "test": "rimraf coverage && jest"
+    "test": "rimraf coverage && jest --runInBand"
   },
   "repository": {
     "type": "git",

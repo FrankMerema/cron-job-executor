@@ -1,18 +1,13 @@
-const { pathsToModuleNameMapper } = require('ts-jest/utils');
-const { compilerOptions } = require('./tsconfig');
-
 module.exports = {
-  reporters: ['default', ['jest-junit', { outputDirectory: 'coverage/jest', outputName: 'results.xml' }]],
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+  reporters: ['default', ['jest-junit', { outputDirectory: './coverage/jest', outputName: 'results.xml' }]],
   moduleFileExtensions: [
     'js',
     'json',
     'ts'
   ],
-  rootDir: 'src',
   testRegex: '.spec.ts$',
   setupFiles: [
-    '../jest-spec-mock'
+    './tests/config/jest-spec-mock'
   ],
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest'
@@ -24,6 +19,6 @@ module.exports = {
     '!**/server.ts',
     '**/*.ts'
   ],
-  coverageDirectory: '../coverage/jest/lcov',
+  coverageDirectory: './coverage/jest/lcov',
   testEnvironment: 'node'
 };

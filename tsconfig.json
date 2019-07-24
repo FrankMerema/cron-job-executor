@@ -15,20 +15,11 @@
     "types": [
       "@types/node",
       "@types/jest"
-    ],
-    "paths": {
-      "@api": [
-        "api"
-      ],
-      "@models": [
-        "models"
-      ],
-      "@routes": [
-        "routes"
-      ],
-      "@handlers": [
-        "handlers"
-      ]
-    }
-  }
+    ]
+  },
+  "exclude": [
+    "tests",
+    "coverage",
+    "jest.config.js"
+  ]
 }
