@@ -6,6 +6,12 @@
   "bin": {
     "weather-service": "dist/bin/start.js"
   },
+  "files": [
+    "/dist",
+    "README.md",
+    "LICENSE",
+    "/systemd"
+  ],
   "scripts": {
     "build": "rimraf dist && tsc",
     "start:dev": "nodemon",
