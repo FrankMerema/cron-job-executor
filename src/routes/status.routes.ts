@@ -26,8 +26,6 @@ export class StatusRoutes {
     this.statusHandler.checkIfOpenWeatherMapIsOnline()
       .then(status => {
         res.json(status);
-      }).catch(status => {
-      res.status(404).json(status);
-    });
+      });
   }
 }

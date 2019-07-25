@@ -18,13 +18,15 @@ describe('StatusHandler', () => {
     promise = Promise.resolve(true);
 
     await expect(statusHandler.checkIfOpenWeatherMapIsOnline()).resolves.toEqual({ openWeatherMap: 'ONLINE' });
-    expect(isPortReachable).toHaveBeenCalledWith(80, { host: 'openweathermap.org' });
+    expect(isPortReachable).toHaveBeenCalledWith(80, { host: 'api.openweathermap.org' });
   });
 
   test('check that the services are offline', async () => {
+    spyOn(global.console, 'error');
     promise = Promise.reject('Just because...');
 
-    await expect(statusHandler.checkIfOpenWeatherMapIsOnline()).rejects.toEqual({ openWeatherMap: 'OFFLINE' });
-    expect(isPortReachable).toHaveBeenCalledWith(80, { host: 'openweathermap.org' });
+    await expect(statusHandler.checkIfOpenWeatherMapIsOnline()).resolves.toEqual({ openWeatherMap: 'OFFLINE' });
+    expect(isPortReachable).toHaveBeenCalledWith(80, { host: 'api.openweathermap.org' });
+    expect(console.error).toHaveBeenCalledWith('Just because...');
   });
 });

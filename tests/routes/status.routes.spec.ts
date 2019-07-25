@@ -55,12 +55,12 @@ describe('StatusRoutes', () => {
 
     test('is offline via /', async () => {
       const customRes = { openWeatherMap: 'OFFLINE' };
-      checkWeatherOnlineFnMock.mockRejectedValueOnce(customRes);
+      checkWeatherOnlineFnMock.mockResolvedValue(customRes);
 
       const response = await request(app).get('/');
 
       expect(checkWeatherOnlineFnMock).toHaveBeenCalled();
-      expect(response.status).toEqual(404);
+      expect(response.status).toEqual(200);
       expect(response.body).toEqual(customRes);
     });
   });
