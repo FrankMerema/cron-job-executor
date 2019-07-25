@@ -34,79 +34,79 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths: .
-
-  lint:
-    - <<: *docker-setup
-    - steps:
-        - attach_workspace:
-            at: ~/repo
-
-        - restore_cache:
-            keys:
-              - v1-dependencies-{{ checksum "package.json" }}
-              # fallback to using the latest cache if no exact match is found
-              - v1-dependencies-
-        - run:
-            name: Lint service
-            command: yarn lint
-
-  test:
-    - <<: *docker-setup
-    - steps:
-        - attach_workspace:
-            at: ~/repo
-
-        - restore_cache:
-            keys:
-              - v1-dependencies-{{ checksum "package.json" }}
-              # fallback to using the latest cache if no exact match is found
-              - v1-dependencies-
-
-        - run:
-            name: Test service
-            command: yarn test
-
-        - store_test_results:
-            path: coverage
-        - store_artifacts:
-            path: coverage
-
-  build:
-    - <<: *docker-setup
-    - steps:
-        - attach_workspace:
-            at: ~/repo
-
-        - restore_cache:
-            keys:
-              - v1-dependencies-{{ checksum "package.json" }}
-              # fallback to using the latest cache if no exact match is found
-              - v1-dependencies-
-
-        - run:
-            name: Build service
-            command: yarn build
-
-        - save_cache:
-            key: v1-assets-{{ .Environment.CIRCLE_SHA1 }}
-            paths:
-              - dist
+#
+#  lint:
+#    - <<: *docker-setup
+#    - steps:
+#        - attach_workspace:
+#            at: ~/repo
+#
+#        - restore_cache:
+#            keys:
+#              - v1-dependencies-{{ checksum "package.json" }}
+#              # fallback to using the latest cache if no exact match is found
+#              - v1-dependencies-
+#        - run:
+#            name: Lint service
+#            command: yarn lint
+#
+#  test:
+#    - <<: *docker-setup
+#    - steps:
+#        - attach_workspace:
+#            at: ~/repo
+#
+#        - restore_cache:
+#            keys:
+#              - v1-dependencies-{{ checksum "package.json" }}
+#              # fallback to using the latest cache if no exact match is found
+#              - v1-dependencies-
+#
+#        - run:
+#            name: Test service
+#            command: yarn test
+#
+#        - store_test_results:
+#            path: coverage
+#        - store_artifacts:
+#            path: coverage
+#
+#  build:
+#    - <<: *docker-setup
+#    - steps:
+#        - attach_workspace:
+#            at: ~/repo
+#
+#        - restore_cache:
+#            keys:
+#              - v1-dependencies-{{ checksum "package.json" }}
+#              # fallback to using the latest cache if no exact match is found
+#              - v1-dependencies-
+#
+#        - run:
+#            name: Build service
+#            command: yarn build
+#
+#        - save_cache:
+#            key: v1-assets-{{ .Environment.CIRCLE_SHA1 }}
+#            paths:
+#              - dist
 
 workflows:
   version: 2
   test_and_lint:
     jobs:
       - install
-      - test:
-          requires:
-            - install
-      - lint:
-          requires:
-            - install
-      - build:
-          requires:
-            - test
-            - lint
+#      - test:
+#          requires:
+#            - install
+#      - lint:
+#          requires:
+#            - install
+#      - build:
+#          requires:
+#            - test
+#            - lint
 #      - patch:
 #          requires:
 #            - test
