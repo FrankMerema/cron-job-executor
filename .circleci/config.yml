@@ -5,9 +5,9 @@
 version: 2
 
 docker-install: &docker-setup
-  working_directory: ~/repo
   docker:
-    - image: circleci/node:8.9.1
+    - image: circleci/node:latest
+  working_directory: ~/repo
 
 jobs:
   install:
@@ -22,9 +22,13 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: yarn config set ${PRIVATE_NPM_REPO_URL}
+      - run:
+          name: Yarn config
+          command: yarn config set ${PRIVATE_NPM_REPO_URL}
 
-      - run: yarn install
+      - run:
+          name: Yarn install
+          command: yarn install
 
       - save_cache:
           paths:
@@ -34,7 +38,7 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths: .
-#
+
 #  lint:
 #    - <<: *docker-setup
 #    - steps:
