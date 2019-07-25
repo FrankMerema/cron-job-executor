@@ -5,17 +5,9 @@
 version: 2
 
 docker-install: &docker-setup
-  docker:
-    - image: circleci/node:latest
   working_directory: ~/repo
-
-yarn-config: &yarn-config
-  name: Yarn config
-  command: yarn config set ${PRIVATE_NPM_REPO_URL}
-
-git-commit-tags: &git-commit-tags
-  name: Commit version
-  command: git push --follow-tags
+  docker:
+    - image: circleci/node:8.9.1
 
 jobs:
   install:
@@ -30,10 +22,9 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: *yarn-config
-      - run:
-          name: Yarn install
-          command: yarn install
+      - run: yarn config set ${PRIVATE_NPM_REPO_URL}
+
+      - run: yarn install
 
       - save_cache:
           paths:
@@ -45,93 +36,61 @@ jobs:
           paths: .
 
   lint:
-    <<: *docker-setup
-    steps:
-      - attach_workspace:
-          at: ~/repo
+    - <<: *docker-setup
+    - steps:
+        - attach_workspace:
+            at: ~/repo
 
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run:
-          name: Lint service
-          command: yarn lint
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
+        - run:
+            name: Lint service
+            command: yarn lint
 
   test:
-    <<: *docker-setup
-    steps:
-      - attach_workspace:
-          at: ~/repo
+    - <<: *docker-setup
+    - steps:
+        - attach_workspace:
+            at: ~/repo
 
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
 
-      - run:
-          name: Test service
-          command: yarn test
+        - run:
+            name: Test service
+            command: yarn test
 
-      - store_test_results:
-          path: coverage
-      - store_artifacts:
-          path: coverage
+        - store_test_results:
+            path: coverage
+        - store_artifacts:
+            path: coverage
 
   build:
-    <<: *docker-setup
-    steps:
-      - attach_workspace:
-          at: ~/repo
+    - <<: *docker-setup
+    - steps:
+        - attach_workspace:
+            at: ~/repo
 
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
 
-      - run:
-          name: Build service
-          command: yarn build
+        - run:
+            name: Build service
+            command: yarn build
 
-      - save_cache:
-          key: v1-assets-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - dist
-
-  patch:
-    <<: *docker-setup
-    steps:
-      - run:
-          name: NPM Patch
-          command: npm version patch
-      - run: *git-commit-tags
-
-  minor:
-    <<: *docker-setup
-    steps:
-      - run:
-          name: NPM Minor
-          command: npm version minor
-      - run: *git-commit-tags
-
-  major:
-    <<: *docker-setup
-    steps:
-      - run:
-          name: NPM Major
-          command: npm version major
-      - run: *git-commit-tags
-
-  release:
-    <<: *docker-setup
-    steps:
-      - run: *yarn-config
-      - run:
-          name: Publish to NPM
-          command: npm publish
+        - save_cache:
+            key: v1-assets-{{ .Environment.CIRCLE_SHA1 }}
+            paths:
+              - dist
 
 workflows:
   version: 2
@@ -148,33 +107,19 @@ workflows:
           requires:
             - test
             - lint
-      - patch:
-          type: approval
-          filters:
-            branches:
-              only: master
-          requires:
-            - build
-      - minor:
-          type: approval
-          filters:
-            branches:
-              only: master
-          requires:
-            - build
-      - major:
-          type: approval
-          filters:
-            branches:
-              only: master
-          requires:
-            - build
-      - release:
-          type: approval
-          requires:
-            - build
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
+#      - patch:
+#          requires:
+#            - test
+#            - lint
+#            - build
+#      - minor:
+#          requires:
+#            - test
+#            - lint
+#            - build
+#      - major:
+#          requires:
+#            - test
+#            - lint
+#            - build
+
