@@ -3,14 +3,15 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
+
+docker-install: &docker-setup
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:8.9.1
+
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:latest
-
-    working_directory: ~/repo
-
+  install:
+    <<: *docker-setup
     steps:
       - checkout
 
@@ -30,11 +31,95 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
-      - run: yarn lint
-      - run: yarn test
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
 
-      - store_test_results:
-          path: coverage
-      - store_artifacts:
-          path: coverage
+  lint:
+    - <<: *docker-setup
+    - steps:
+        - attach_workspace:
+            at: ~/repo
+
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
+        - run:
+            name: Lint service
+            command: yarn lint
+
+  test:
+    - <<: *docker-setup
+    - steps:
+        - attach_workspace:
+            at: ~/repo
+
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
+
+        - run:
+            name: Test service
+            command: yarn test
+
+        - store_test_results:
+            path: coverage
+        - store_artifacts:
+            path: coverage
+
+  build:
+    - <<: *docker-setup
+    - steps:
+        - attach_workspace:
+            at: ~/repo
+
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
+
+        - run:
+            name: Build service
+            command: yarn build
+
+        - save_cache:
+            key: v1-assets-{{ .Environment.CIRCLE_SHA1 }}
+            paths:
+              - dist
+
+workflows:
+  version: 2
+  test_and_lint:
+    jobs:
+      - install
+      - test:
+          requires:
+            - install
+      - lint:
+          requires:
+            - install
+      - build:
+          requires:
+            - test
+            - lint
+#      - patch:
+#          requires:
+#            - test
+#            - lint
+#            - build
+#      - minor:
+#          requires:
+#            - test
+#            - lint
+#            - build
+#      - major:
+#          requires:
+#            - test
+#            - lint
+#            - build
+
