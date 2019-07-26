@@ -8,6 +8,14 @@ docker-install: &docker-setup
   docker:
     - image: circleci/node:latest
   working_directory: ~/repo
+  steps:
+    - run:
+      name: Yarn config
+      command: yarn config set ${PRIVATE_NPM_REPO_URL}
+
+git-commit-tags: &git-commit-tags
+  name: Commit version
+  command: git push --follow-tags
 
 jobs:
   install:
@@ -21,10 +29,6 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-
-      - run:
-          name: Yarn config
-          command: yarn config set ${PRIVATE_NPM_REPO_URL}
 
       - run:
           name: Yarn install
@@ -96,6 +100,37 @@ jobs:
           paths:
             - dist
 
+  patch:
+    <<: *docker-setup
+    steps:
+      - run:
+          name: NPM Patch
+          command: npm version patch
+      - run: *git-commit-tags
+
+  minor:
+    <<: *docker-setup
+    steps:
+      - run:
+          name: NPM Minor
+          command: npm version minor
+      - run: *git-commit-tags
+
+  major:
+    <<: *docker-setup
+    steps:
+      - run:
+          name: NPM Major
+          command: npm version major
+      - run: *git-commit-tags
+
+  release:
+    <<: *docker-setup
+    steps:
+      - run:
+          name: Publish to NPM
+          command: npm publish
+
 workflows:
   version: 2
   test_and_lint:
@@ -108,22 +143,41 @@ workflows:
           requires:
             - install
       - build:
+          filters:
+            branches:
+              only:
+                - master
+                - /^v.*/
           requires:
             - test
             - lint
-#      - patch:
-#          requires:
-#            - test
-#            - lint
-#            - build
-#      - minor:
-#          requires:
-#            - test
-#            - lint
-#            - build
-#      - major:
-#          requires:
-#            - test
-#            - lint
-#            - build
-
+      - patch:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
+            - hold
+      - minor:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
+            - hold
+      - major:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
+            - hold
+      - release:
+          requires:
+            - build
+            - hold
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
