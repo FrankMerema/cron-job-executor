@@ -8,10 +8,10 @@ docker-install: &docker-setup
   docker:
     - image: circleci/node:latest
   working_directory: ~/repo
-  steps:
-    - run:
-      name: Yarn config
-      command: yarn config set ${PRIVATE_NPM_REPO_URL}
+
+yarn-config: &yarn-config
+  name: Yarn config
+  command: yarn config set ${PRIVATE_NPM_REPO_URL}
 
 git-commit-tags: &git-commit-tags
   name: Commit version
@@ -30,6 +30,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
+      - run: *yarn-config
       - run:
           name: Yarn install
           command: yarn install
@@ -127,6 +128,7 @@ jobs:
   release:
     <<: *docker-setup
     steps:
+      - run: *yarn-config
       - run:
           name: Publish to NPM
           command: npm publish
@@ -152,30 +154,30 @@ workflows:
             - test
             - lint
       - patch:
+          type: approval
           filters:
             branches:
               only: master
           requires:
             - build
-            - hold
       - minor:
+          type: approval
           filters:
             branches:
               only: master
           requires:
             - build
-            - hold
       - major:
+          type: approval
           filters:
             branches:
               only: master
           requires:
             - build
-            - hold
       - release:
+          type: approval
           requires:
             - build
-            - hold
           filters:
             tags:
               only: /^v.*/
