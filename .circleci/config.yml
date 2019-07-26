@@ -23,11 +23,6 @@ git-commit-tags: &git-commit-tags
     name: Commit version
     command: git push --follow-tags
 
-add-github-rsa: &add-github-rsa
-  add_ssh_keys:
-    fingerprints:
-      - "b6:c0:bd:c8:68:ff:8f:25:dd:54:59:64:ed:d7:71:55"
-
 jobs:
   install:
     <<: *docker-setup
@@ -43,6 +38,9 @@ jobs:
 
       - run: *yarn-config
       - run:
+          name: Checking params
+          command: cat ~/.ssh/known_hosts
+      - run:
           name: Yarn install
           command: yarn install
 
@@ -50,6 +48,11 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      - save_cache:
+          paths:
+            - ~/.ssh/known_hosts
+          key: v1-ssh-{{ .Branch }}
 
       - persist_to_workspace:
           root: ~/repo
@@ -110,10 +113,18 @@ jobs:
   patch:
     <<: *docker-setup
     steps:
-      - *add-github-rsa
       - attach_workspace:
           at: ~/repo
+      - restore_cache:
+          keys:
+            - v1-ssh-{{ .Branch }}
+#      - add_ssh_keys:
+#          fingerprints:
+#            - "c6:f7:b9:15:54:a7:ae:66:36:8d:0c:12:a7:9c:d6:28"
       - *git-config
+      - run:
+          name: Checking params
+          command: cat ~/.ssh/known_hosts
       - run:
           name: NPM Patch
           command: npm version patch
@@ -122,7 +133,6 @@ jobs:
   minor:
     <<: *docker-setup
     steps:
-      - *add-github-rsa
       - attach_workspace:
           at: ~/repo
       - *git-config
@@ -134,7 +144,6 @@ jobs:
   major:
     <<: *docker-setup
     steps:
-      - *add-github-rsa
       - attach_workspace:
           at: ~/repo
       - *git-config
