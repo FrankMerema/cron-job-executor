@@ -13,9 +13,15 @@ yarn-config: &yarn-config
   name: Yarn config
   command: yarn config set ${PRIVATE_NPM_REPO_URL}
 
+git-config: &git-config
+  run:
+    name: Setup Git
+    command: git config --global user.email ${GIT_PRIVATE_EMAIL} && git config --global user.name ${GIT_PRIVATE_NAME}
+
 git-commit-tags: &git-commit-tags
-  name: Commit version
-  command: git push --follow-tags
+  run:
+    name: Commit version
+    command: git push --follow-tags
 
 jobs:
   install:
@@ -96,38 +102,44 @@ jobs:
           name: Build service
           command: yarn build
 
-      - save_cache:
-          key: v1-assets-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - dist
-
   patch:
     <<: *docker-setup
     steps:
+      - attach_workspace:
+          at: ~/repo
+      - *git-config
       - run:
           name: NPM Patch
           command: npm version patch
-      - run: *git-commit-tags
+      - *git-commit-tags
 
   minor:
     <<: *docker-setup
     steps:
+      - attach_workspace:
+          at: ~/repo
+      - *git-config
       - run:
           name: NPM Minor
           command: npm version minor
-      - run: *git-commit-tags
+      - *git-commit-tags
 
   major:
     <<: *docker-setup
     steps:
+      - attach_workspace:
+          at: ~/repo
+      - *git-config
       - run:
           name: NPM Major
           command: npm version major
-      - run: *git-commit-tags
+      - *git-commit-tags
 
   release:
     <<: *docker-setup
     steps:
+      - attach_workspace:
+          at: ~/repo
       - run: *yarn-config
       - run:
           name: Publish to NPM
@@ -148,31 +160,57 @@ workflows:
           requires:
             - test
             - lint
+      - approval-patch:
+          type: approval
+          requires:
+            - build
+      #          filters:
+      #            branches:
+      #              only: master
+      - approval-minor:
+          type: approval
+          requires:
+            - build
+      #          filters:
+      #            branches:
+      #              only: master
+      - approval-major:
+          type: approval
+          requires:
+            - build
+      #          filters:
+      #            branches:
+      #              only: master
+      - approval-release:
+          type: approval
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
       - patch:
-          type: approval
-          filters:
-            branches:
-              only: master
+          #          filters:
+          #            branches:
+          #              only: master
           requires:
-            - build
+            - approval-patch
       - minor:
-          type: approval
-          filters:
-            branches:
-              only: master
+          #          filters:
+          #            branches:
+          #              only: master
           requires:
-            - build
+            - approval-minor
       - major:
-          type: approval
-          filters:
-            branches:
-              only: master
+          #          filters:
+          #            branches:
+          #              only: master
           requires:
-            - build
+            - approval-major
       - release:
-          type: approval
           requires:
-            - build
+            - approval-release
           filters:
             tags:
               only: /^v.*/
