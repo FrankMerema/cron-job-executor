@@ -145,11 +145,6 @@ workflows:
           requires:
             - install
       - build:
-          filters:
-            branches:
-              only:
-                - master
-                - /^v.*/
           requires:
             - test
             - lint
