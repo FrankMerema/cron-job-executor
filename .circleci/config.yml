@@ -13,6 +13,17 @@ yarn-config: &yarn-config
   name: Yarn config
   command: yarn config set ${PRIVATE_NPM_REPO_URL}
 
+restore-dep-cache: &restore-dep-cache
+  restore_cache:
+    keys:
+      - v1-dependencies-{{ checksum "package.json" }}
+      - v1-dependencies-
+
+restore-ssh-cache: &restore-ssh-cache
+  restore_cache:
+    keys:
+      - v1-ssh-{{ .Branch }}
+
 git-config: &git-config
   run:
     name: Setup Git
@@ -28,32 +39,17 @@ jobs:
     <<: *docker-setup
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
+      - *restore-dep-cache
       - run: *yarn-config
-      - run:
-          name: Checking params
-          command: cat ~/.ssh/known_hosts
-      - run:
-          name: Yarn install
-          command: yarn install
-
+      - run: yarn install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
       - save_cache:
           paths:
             - ~/.ssh/known_hosts
           key: v1-ssh-{{ .Branch }}
-
       - persist_to_workspace:
           root: ~/repo
           paths: .
@@ -63,32 +59,16 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run:
-          name: Lint service
-          command: yarn lint
+      - *restore-dep-cache
+      - run: yarn lint
 
   test:
     <<: *docker-setup
     steps:
       - attach_workspace:
           at: ~/repo
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run:
-          name: Test service
-          command: yarn test
-
+      - *restore-dep-cache
+      - run: yarn test
       - store_test_results:
           path: coverage
       - store_artifacts:
@@ -99,58 +79,41 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run:
-          name: Build service
-          command: yarn build
+      - *restore-dep-cache
+      - run: yarn build
 
   patch:
     <<: *docker-setup
     steps:
       - attach_workspace:
           at: ~/repo
-      - restore_cache:
-          keys:
-            - v1-ssh-{{ .Branch }}
-#      - add_ssh_keys:
-#          fingerprints:
-#            - "c6:f7:b9:15:54:a7:ae:66:36:8d:0c:12:a7:9c:d6:28"
+      - *restore-ssh-cache
       - *git-config
-      - run:
-          name: Checking params
-          command: cat ~/.ssh/known_hosts
-      - run:
-          name: NPM Patch
-          command: npm version patch
-      - *git-commit-tags
+      - run: npm version patch
+  #      - *git-commit-tags
+      - run: circleci step halt
 
   minor:
     <<: *docker-setup
     steps:
       - attach_workspace:
           at: ~/repo
+      - *restore-ssh-cache
       - *git-config
-      - run:
-          name: NPM Minor
-          command: npm version minor
-      - *git-commit-tags
+      - run: npm version minor
+  #      - *git-commit-tags
 
   major:
     <<: *docker-setup
     steps:
       - attach_workspace:
           at: ~/repo
+      - *restore-ssh-cache
       - *git-config
       - run:
           name: NPM Major
           command: npm version major
-      - *git-commit-tags
+  #      - *git-commit-tags
 
   release:
     <<: *docker-setup
@@ -158,15 +121,16 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run: *yarn-config
-      - run:
-          name: Publish to NPM
-          command: npm publish
+      - run: npm publish
 
 workflows:
   version: 2
-  test_and_lint:
+  test_and_build:
     jobs:
-      - install
+      - install:
+          filters:
+            branches:
+              ignore: master
       - test:
           requires:
             - install
@@ -177,59 +141,51 @@ workflows:
           requires:
             - test
             - lint
+  version_bump:
+    jobs:
+      - install:
+          filters:
+            branches:
+              only: master
+      - build:
+          requires:
+            - install
       - approval-patch:
           type: approval
           requires:
             - build
-      #          filters:
-      #            branches:
-      #              only: master
       - approval-minor:
           type: approval
           requires:
             - build
-      #          filters:
-      #            branches:
-      #              only: master
       - approval-major:
           type: approval
           requires:
             - build
-      #          filters:
-      #            branches:
-      #              only: master
+      - patch:
+          requires:
+            - approval-patch
+      - minor:
+          requires:
+            - approval-minor
+      - major:
+          requires:
+            - approval-major
+  release_version:
+    jobs:
+      - install:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - build:
+          requires:
+            - install
       - approval-release:
           type: approval
           requires:
             - build
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - patch:
-          #          filters:
-          #            branches:
-          #              only: master
-          requires:
-            - approval-patch
-      - minor:
-          #          filters:
-          #            branches:
-          #              only: master
-          requires:
-            - approval-minor
-      - major:
-          #          filters:
-          #            branches:
-          #              only: master
-          requires:
-            - approval-major
       - release:
           requires:
             - approval-release
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
