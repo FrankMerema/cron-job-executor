@@ -1,7 +1,3 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2
 
 docker-install: &docker-setup
@@ -10,8 +6,7 @@ docker-install: &docker-setup
   working_directory: ~/repo
 
 yarn-config: &yarn-config
-  name: Yarn config
-  command: yarn config set ${PRIVATE_NPM_REPO_URL}
+  run: yarn config set ${PRIVATE_NPM_REPO_URL}
 
 restore-dep-cache: &restore-dep-cache
   restore_cache:
@@ -25,14 +20,10 @@ restore-ssh-cache: &restore-ssh-cache
       - v1-ssh-{{ .Branch }}
 
 git-config: &git-config
-  run:
-    name: Setup Git
-    command: git config --global user.email ${GIT_PRIVATE_EMAIL} && git config --global user.name ${GIT_PRIVATE_NAME}
+  run: git config --global user.email ${GIT_PRIVATE_EMAIL} && git config --global user.name ${GIT_PRIVATE_NAME}
 
 git-commit-tags: &git-commit-tags
-  run:
-    name: Commit version
-    command: git push --follow-tags
+  run: git push --follow-tags
 
 jobs:
   install:
@@ -40,7 +31,7 @@ jobs:
     steps:
       - checkout
       - *restore-dep-cache
-      - run: *yarn-config
+      - *yarn-config
       - run: yarn install
       - save_cache:
           paths:
@@ -90,8 +81,7 @@ jobs:
       - *restore-ssh-cache
       - *git-config
       - run: npm version patch
-  #      - *git-commit-tags
-      - run: circleci step halt
+      - *git-commit-tags
 
   minor:
     <<: *docker-setup
@@ -101,7 +91,7 @@ jobs:
       - *restore-ssh-cache
       - *git-config
       - run: npm version minor
-  #      - *git-commit-tags
+      - *git-commit-tags
 
   major:
     <<: *docker-setup
@@ -110,17 +100,15 @@ jobs:
           at: ~/repo
       - *restore-ssh-cache
       - *git-config
-      - run:
-          name: NPM Major
-          command: npm version major
-  #      - *git-commit-tags
+      - run: npm version major
+      - *git-commit-tags
 
   release:
     <<: *docker-setup
     steps:
       - attach_workspace:
           at: ~/repo
-      - run: *yarn-config
+      - *yarn-config
       - run: npm publish
 
 workflows:
@@ -141,36 +129,37 @@ workflows:
           requires:
             - test
             - lint
-  version_bump:
-    jobs:
-      - install:
-          filters:
-            branches:
-              only: master
-      - build:
-          requires:
-            - install
-      - approval-patch:
-          type: approval
-          requires:
-            - build
-      - approval-minor:
-          type: approval
-          requires:
-            - build
-      - approval-major:
-          type: approval
-          requires:
-            - build
-      - patch:
-          requires:
-            - approval-patch
-      - minor:
-          requires:
-            - approval-minor
-      - major:
-          requires:
-            - approval-major
+  # Version bump is disable until circle ci supports conditional steps.
+  #  version_bump:
+  #    jobs:
+  #      - install:
+  #          filters:
+  #            branches:
+  #              only: master
+  #      - build:
+  #          requires:
+  #            - install
+  #      - approval-patch:
+  #          type: approval
+  #          requires:
+  #            - build
+  #      - approval-minor:
+  #          type: approval
+  #          requires:
+  #            - build
+  #      - approval-major:
+  #          type: approval
+  #          requires:
+  #            - build
+  #      - patch:
+  #          requires:
+  #            - approval-patch
+  #      - minor:
+  #          requires:
+  #            - approval-minor
+  #      - major:
+  #          requires:
+  #            - approval-major
   release_version:
     jobs:
       - install:
