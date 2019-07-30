@@ -1,6 +1,6 @@
 {
   "name": "@frankmerema/weatherservice",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "NodeJS weather api for openweather.org",
   "main": "dist/bin/start.js",
   "bin": {
@@ -44,13 +44,13 @@
     "@types/helmet": "0.0.43",
     "@types/jest": "24.0.15",
     "@types/node": "12.6.8",
-    "@types/supertest": "^2.0.8",
+    "@types/supertest": "2.0.8",
     "jest": "24.8.0",
     "jest-junit": "6.4.0",
     "nodemon": "1.19.1",
     "prettier": "1.18.2",
     "rimraf": "2.6.3",
-    "supertest": "^4.0.2",
+    "supertest": "4.0.2",
     "ts-jest": "24.0.2",
     "ts-node": "8.3.0",
     "tsconfig-paths": "3.8.0",
