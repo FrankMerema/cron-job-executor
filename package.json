@@ -1,6 +1,6 @@
 {
   "name": "@frankmerema/weatherservice",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NodeJS weather api for openweather.org",
   "main": "dist/bin/start.js",
   "bin": {
