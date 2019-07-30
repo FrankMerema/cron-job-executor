@@ -72,6 +72,9 @@ jobs:
           at: ~/repo
       - *restore-dep-cache
       - run: yarn build
+      - persist_to_workspace:
+          root: ~/repo
+          paths: /dist
 
   patch:
     <<: *docker-setup
