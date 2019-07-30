@@ -74,7 +74,7 @@ jobs:
       - run: yarn build
       - persist_to_workspace:
           root: ~/repo
-          paths: /dist
+          paths: dist
 
   patch:
     <<: *docker-setup
