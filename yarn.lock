@@ -139,10 +139,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@frankmerema/is-port-reachable@0.0.7":
-  version "0.0.7"
-  resolved "http://merema.ddns.net:4873/@frankmerema%2fis-port-reachable/-/is-port-reachable-0.0.7.tgz#bd851b2ba5b1e276d167ada1d959ef7525b2576e"
-  integrity sha512-ZQtM+LU3K6pHkm70K9u4bEpInE8prS72Uaq7HdE0aYJo1tQLPYKp1lvvHO5tq/vhzJHn+0bJo+iJPcyJxZY7vg==
+"@frankmerema/is-port-reachable@1.0.0":
+  version "1.0.0"
+  resolved "http://merema.ddns.net:4873/@frankmerema%2fis-port-reachable/-/is-port-reachable-1.0.0.tgz#d88610a4e5607e09008b340b8894e9e83f813107"
+  integrity sha512-pf9srsARVp/FDdpuNVzUHs8C4hhjlV8EljXcXJNWCk9eFRw4+rRAlpTzWVWpl42fP0rHo3Myq3WLgWGwzQ7PaA==
 
 "@jest/console@^24.7.1":
   version "24.7.1"
