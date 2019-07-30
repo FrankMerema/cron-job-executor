@@ -41,7 +41,7 @@ weather service as a real system service.
 |5             |**[Service]**                                                                                  |
 |6             |Restart=on-failure                                                                             |
 |7             |User=root                                                                                      |
-|8             |ExecStart=/usr/local/bin/weather-service --config /usr/local/bin/weather-service.config.json   |
+|8             |ExecStart=/usr/local/bin/weather-service --config="/usr/local/bin/weather-service.config.json" |
 |9             |                                                                                               |
 |10            |**[Install]**                                                                                  |
 |11            |WantedBy=multi-user.target                                                                     |
@@ -75,6 +75,9 @@ weather service as a real system service.
 > It will now boot every time the network connection is established and users are able to login.
 > 
 > If you want to stop or restart the service it's the same as above only change `start` to `stop` or `restart`
+>
+> To see the logs of the service (and check if its up and running correctly) you can run the command:\
+> `sudo journalctl -u weather`
 
 
 #### NPM Run start
