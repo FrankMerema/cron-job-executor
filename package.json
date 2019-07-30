@@ -10,7 +10,7 @@
     "/dist",
     "README.md",
     "LICENSE",
-    "/systemd",
+    "/systemd"
   ],
   "scripts": {
     "build:post": "mkdir dist/src/assets && cp src/assets/current.city.list.min.json dist/src/assets/current.city.list.min.json",

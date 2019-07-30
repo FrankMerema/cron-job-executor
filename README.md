@@ -98,6 +98,8 @@ If the package is installed globally you can also run the program by executing `
 
 ### City endpoints
 
+> Works from version 1.1.x and higher!
+
 For the openweathermap api you need a city name or for a more accurate forecast a city ID.
 To find these there are two endpoints for getting info about a city. (see [src/models/city.model.ts](https://github.com/FrankMerema/weather-service/blob/master/src/models/city.model.ts) for more info about the city object) 
 
