@@ -171,10 +171,25 @@ workflows:
       - build:
           requires:
             - install
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
       - approval-release:
           type: approval
           requires:
             - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
       - release:
           requires:
             - approval-release
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
