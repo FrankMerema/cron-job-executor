@@ -6,6 +6,5 @@
   "major": {
     "automerge": false
   },
-  "bumpVersion": "patch",
   "semanticCommits": true
 }
