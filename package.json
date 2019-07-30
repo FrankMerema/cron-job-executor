@@ -10,10 +10,11 @@
     "/dist",
     "README.md",
     "LICENSE",
-    "/systemd"
+    "/systemd",
   ],
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build:post": "mkdir dist/src/assets && cp src/assets/current.city.list.min.json dist/src/assets/current.city.list.min.json",
+    "build": "rimraf dist && tsc && yarn run build:post",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
     "start:prod": "node dist/bin/start.js",
