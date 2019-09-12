@@ -11,7 +11,8 @@ export class WeatherService {
     return axios.get<OpenWeather>(this.WEATHER_URL, {
       params: {
         q: city,
-        appid: this.key
+        appid: this.key,
+        units: 'metric'
       }
     });
   }
@@ -20,7 +21,8 @@ export class WeatherService {
     return axios.get<OpenWeather>(this.WEATHER_URL, {
       params: {
         id: cityId,
-        appid: this.key
+        appid: this.key,
+        units: 'metric'
       }
     });
   }
@@ -30,7 +32,8 @@ export class WeatherService {
       params: {
         lon,
         lat,
-        appid: this.key
+        appid: this.key,
+        units: 'metric'
       }
     });
   }
@@ -39,7 +42,8 @@ export class WeatherService {
     return axios.get<OpenWeather>(this.WEATHER_URL, {
       params: {
         zip: `${zip},${countryAbbreviation}`,
-        appid: this.key
+        appid: this.key,
+        units: 'metric'
       }
     });
   }
