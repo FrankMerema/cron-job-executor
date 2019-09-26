@@ -1,7 +1,8 @@
 import Path from 'path';
 
 export const getConfigFile = () => {
-  const configFileLocation = process.argv.find(arg => arg.indexOf('--config') !== -1 || arg.indexOf('-c') !== -1);
+  const args = process.argv.slice(2);
+  const configFileLocation = args.find(arg => arg.indexOf('--config') !== -1 || arg.indexOf('-c') !== -1);
 
   if (configFileLocation && configFileLocation.match(/.json/g)) {
     try {
