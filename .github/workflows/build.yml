@@ -19,9 +19,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: setup yarn
       run: |
-        yarn config set http://${PRIVATE_NPM_REPO_URL}
-        echo "@frankmerema:registry=${PRIVATE_NPM_REPO_URL}/" > ~/.npmrc
-        echo "//${PRIVATE_NPM_REPO_URL}/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+        echo "@frankmerema:registry=${{ secrets.PRIVATE_NPM_REPO_URL }}/" > ~/.npmrc
+        echo "//${{ secrets.PRIVATE_NPM_REPO_URL }}/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+        yarn config set registry http://${{ secrets.PRIVATE_NPM_REPO_URL }} --silent
     - name: yarn install, build, and test
       run: |
         yarn install
