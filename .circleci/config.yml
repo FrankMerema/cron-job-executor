@@ -6,7 +6,11 @@ docker-install: &docker-setup
   working_directory: ~/repo
 
 yarn-config: &yarn-config
-  run: yarn config set ${PRIVATE_NPM_REPO_URL}
+  run:
+    command: |
+      echo "@frankmerema:registry=http://${PRIVATE_NPM_REPO_URL}/" > ~/.npmrc
+      echo "//${PRIVATE_NPM_REPO_URL}/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      yarn config set registry http://${PRIVATE_NPM_REPO_URL} --silent
 
 restore-dep-cache: &restore-dep-cache
   restore_cache:

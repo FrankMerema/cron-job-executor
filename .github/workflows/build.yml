@@ -17,7 +17,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+    - name: setup yarn
+      run: |
+        echo "@frankmerema:registry=${{ secrets.PRIVATE_NPM_REPO_URL }}/" > ~/.npmrc
+        echo "//${{ secrets.PRIVATE_NPM_REPO_URL }}/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+        yarn config set registry http://${{ secrets.PRIVATE_NPM_REPO_URL }} --silent
+    - name: yarn install, build, and test
       run: |
         yarn install
         yarn run lint
