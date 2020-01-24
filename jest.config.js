@@ -1,14 +1,14 @@
 module.exports = {
-  reporters: ['default', ['jest-junit', { outputDirectory: './coverage/jest', outputName: 'results.xml' }]],
-  moduleFileExtensions: [
-    'js',
-    'json',
-    'ts'
+  reporters: [
+    'default',
+    [
+      'jest-junit',
+      { outputDirectory: './coverage/jest', outputName: 'results.xml' }
+    ]
   ],
+  moduleFileExtensions: ['js', 'json', 'ts'],
   testRegex: '.spec.ts$',
-  setupFiles: [
-    './tests/config/jest-spec-mock'
-  ],
+  setupFiles: ['./tests/config/jest-spec-mock'],
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest'
   },

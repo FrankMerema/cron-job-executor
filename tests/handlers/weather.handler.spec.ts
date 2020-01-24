@@ -53,9 +53,13 @@ const axiosResponse = {
   config: {}
 };
 
-const fetchWeatherForCityByCityNameMock = jest.fn().mockResolvedValue(axiosResponse);
+const fetchWeatherForCityByCityNameMock = jest
+  .fn()
+  .mockResolvedValue(axiosResponse);
 const fetchWeatherForCityByIdMock = jest.fn().mockResolvedValue(axiosResponse);
-const fetchWeatherForCityByCoordinatesMock = jest.fn().mockResolvedValue(axiosResponse);
+const fetchWeatherForCityByCoordinatesMock = jest
+  .fn()
+  .mockResolvedValue(axiosResponse);
 const fetchWeatherForCityByZipMock = jest.fn().mockResolvedValue(axiosResponse);
 
 WeatherService.fetchWeatherForCityByCityName = fetchWeatherForCityByCityNameMock;
@@ -76,22 +80,33 @@ describe('WeatherHandler', () => {
   describe('get weather', () => {
     describe('successful', () => {
       test('via fetchWeatherForCityByCityName', async () => {
-        await expect(weatherHandler.fetchWeatherForCityByCityName('weert')).resolves.toEqual(weatherResult);
+        await expect(
+          weatherHandler.fetchWeatherForCityByCityName('weert')
+        ).resolves.toEqual(weatherResult);
         expect(fetchWeatherForCityByCityNameMock).toHaveBeenCalledWith('weert');
       });
 
       test('via fetchWeatherForCityByCityId', async () => {
-        await expect(weatherHandler.fetchWeatherForCityById('2744911')).resolves.toEqual(weatherResult);
+        await expect(
+          weatherHandler.fetchWeatherForCityById('2744911')
+        ).resolves.toEqual(weatherResult);
         expect(fetchWeatherForCityByIdMock).toHaveBeenCalledWith('2744911');
       });
 
       test('via fetchWeatherForCityByCoordinates', async () => {
-        await expect(weatherHandler.fetchWeatherForCityByCoordinates('5.71', '51.25')).resolves.toEqual(weatherResult);
-        expect(fetchWeatherForCityByCoordinatesMock).toHaveBeenCalledWith('5.71', '51.25');
+        await expect(
+          weatherHandler.fetchWeatherForCityByCoordinates('5.71', '51.25')
+        ).resolves.toEqual(weatherResult);
+        expect(fetchWeatherForCityByCoordinatesMock).toHaveBeenCalledWith(
+          '5.71',
+          '51.25'
+        );
       });
 
       test('via fetchWeatherForCityByZip', async () => {
-        await expect(weatherHandler.fetchWeatherForCityByZip('6002', 'nl')).resolves.toEqual(weatherResult);
+        await expect(
+          weatherHandler.fetchWeatherForCityByZip('6002', 'nl')
+        ).resolves.toEqual(weatherResult);
         expect(fetchWeatherForCityByZipMock).toHaveBeenCalledWith('6002', 'nl');
       });
     });
@@ -107,22 +122,33 @@ describe('WeatherHandler', () => {
       });
 
       test('via fetchWeatherForCityByCityName', async () => {
-        await expect(weatherHandler.fetchWeatherForCityByCityName('weert')).rejects.toEqual(error);
+        await expect(
+          weatherHandler.fetchWeatherForCityByCityName('weert')
+        ).rejects.toEqual(error);
         expect(fetchWeatherForCityByCityNameMock).toHaveBeenCalledWith('weert');
       });
 
       test('via fetchWeatherForCityByCityId', async () => {
-        await expect(weatherHandler.fetchWeatherForCityById('2744911')).rejects.toEqual(error);
+        await expect(
+          weatherHandler.fetchWeatherForCityById('2744911')
+        ).rejects.toEqual(error);
         expect(fetchWeatherForCityByIdMock).toHaveBeenCalledWith('2744911');
       });
 
       test('via fetchWeatherForCityByCoordinates', async () => {
-        await expect(weatherHandler.fetchWeatherForCityByCoordinates('5.71', '51.25')).rejects.toEqual(error);
-        expect(fetchWeatherForCityByCoordinatesMock).toHaveBeenCalledWith('5.71', '51.25');
+        await expect(
+          weatherHandler.fetchWeatherForCityByCoordinates('5.71', '51.25')
+        ).rejects.toEqual(error);
+        expect(fetchWeatherForCityByCoordinatesMock).toHaveBeenCalledWith(
+          '5.71',
+          '51.25'
+        );
       });
 
       test('via fetchWeatherForCityByZip', async () => {
-        await expect(weatherHandler.fetchWeatherForCityByZip('6002', 'nl')).rejects.toEqual(error);
+        await expect(
+          weatherHandler.fetchWeatherForCityByZip('6002', 'nl')
+        ).rejects.toEqual(error);
         expect(fetchWeatherForCityByZipMock).toHaveBeenCalledWith('6002', 'nl');
       });
     });

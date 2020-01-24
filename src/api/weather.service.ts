@@ -3,11 +3,13 @@ import { OpenWeather } from '../models';
 import { getConfigFile } from '../utils/config-reader.util';
 
 export class WeatherService {
-
   private static readonly key = getConfigFile().openWeatherMapKey || '';
-  private static readonly WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather';
+  private static readonly WEATHER_URL =
+    'https://api.openweathermap.org/data/2.5/weather';
 
-  static fetchWeatherForCityByCityName(city: string): AxiosPromise<OpenWeather> {
+  static fetchWeatherForCityByCityName(
+    city: string
+  ): AxiosPromise<OpenWeather> {
     return axios.get<OpenWeather>(this.WEATHER_URL, {
       params: {
         q: city,
@@ -27,7 +29,10 @@ export class WeatherService {
     });
   }
 
-  static fetchWeatherForCityByCoordinates(lon: string, lat: string): AxiosPromise<OpenWeather> {
+  static fetchWeatherForCityByCoordinates(
+    lon: string,
+    lat: string
+  ): AxiosPromise<OpenWeather> {
     return axios.get<OpenWeather>(this.WEATHER_URL, {
       params: {
         lon,
@@ -38,7 +43,10 @@ export class WeatherService {
     });
   }
 
-  static fetchWeatherForCityByZip(zip: string, countryAbbreviation: string): AxiosPromise<OpenWeather> {
+  static fetchWeatherForCityByZip(
+    zip: string,
+    countryAbbreviation: string
+  ): AxiosPromise<OpenWeather> {
     return axios.get<OpenWeather>(this.WEATHER_URL, {
       params: {
         zip: `${zip},${countryAbbreviation}`,

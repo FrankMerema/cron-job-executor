@@ -1,4 +1,4 @@
 export interface Wind {
-    speed: number;
-    deg: number;
+  speed: number;
+  deg: number;
 }
