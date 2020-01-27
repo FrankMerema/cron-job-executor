@@ -18,8 +18,9 @@
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
     "start:prod": "node dist/bin/start.js",
-    "lint": "tslint -p tsconfig.json -c tslint.json",
-    "test": "rimraf coverage && jest --runInBand"
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
+    "test": "rimraf coverage && jest --runInBand",
+    "format": "prettier '**/*.{js,ts}' --ignore-path .gitignore --check"
   },
   "repository": {
     "type": "git",
@@ -32,30 +33,33 @@
   },
   "homepage": "https://github.com/FrankMerema/weather-service#readme",
   "dependencies": {
-    "@frankmerema/is-port-reachable": "1.0.0",
-    "axios": "0.19.0",
+    "@frankmerema/is-port-reachable": "1.0.4",
+    "axios": "0.19.2",
     "body-parser": "1.19.0",
     "express": "4.17.1",
     "express-rate-limit": "5.0.0",
     "helmet": "3.21.2"
   },
   "devDependencies": {
-    "@types/express": "4.17.1",
+    "@types/express": "4.17.2",
     "@types/express-rate-limit": "3.3.3",
     "@types/helmet": "0.0.45",
-    "@types/jest": "24.0.24",
-    "@types/node": "12.12.21",
+    "@types/jest": "24.9.1",
+    "@types/node": "13.5.0",
     "@types/supertest": "2.0.8",
-    "jest": "24.9.0",
+    "@typescript-eslint/eslint-plugin": "2.17.0",
+    "@typescript-eslint/parser": "2.17.0",
+    "eslint": "6.8.0",
+    "eslint-plugin-prefer-arrow": "1.1.7",
+    "jest": "25.1.0",
     "jest-junit": "10.0.0",
     "nodemon": "2.0.2",
     "prettier": "1.19.1",
     "rimraf": "3.0.0",
     "supertest": "4.0.2",
-    "ts-jest": "24.2.0",
-    "ts-node": "8.5.4",
+    "ts-jest": "25.0.0",
+    "ts-node": "8.6.2",
     "tsconfig-paths": "3.9.0",
-    "tslint": "5.20.1",
-    "typescript": "3.7.4"
+    "typescript": "3.7.5"
   }
 }

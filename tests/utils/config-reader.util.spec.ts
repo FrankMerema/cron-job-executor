@@ -35,6 +35,7 @@ describe('ConfigReaderUtil', () => {
       jest.mock(
         'service.config.json',
         () => {
+          /* eslint-disable-next-line */
           throw { code: 'abc' };
         },
         { virtual: true }
@@ -42,6 +43,7 @@ describe('ConfigReaderUtil', () => {
       pathResolve.mockImplementation(() => 'service.config.json');
 
       expect(getConfigFile()).toEqual({});
+      /* eslint-disable-next-line */
       expect(console.warn).toHaveBeenCalledWith(
         'Please provide a valid config file see README for the format'
       );
@@ -52,6 +54,7 @@ describe('ConfigReaderUtil', () => {
       jest.mock(
         'service.config.json',
         () => {
+          /* eslint-disable-next-line */
           throw { code: 'MODULE_NOT_FOUND' };
         },
         { virtual: true }
@@ -59,6 +62,7 @@ describe('ConfigReaderUtil', () => {
       pathResolve.mockImplementation(() => 'service.config.json');
 
       expect(getConfigFile()).toEqual({});
+      /* eslint-disable-next-line */
       expect(console.warn).toHaveBeenCalledWith(
         'No valid config file found for the --config="service.config.json"'
       );
@@ -70,6 +74,7 @@ describe('ConfigReaderUtil', () => {
     spyOn(global.console, 'warn');
 
     expect(getConfigFile()).toEqual({});
+    /* eslint-disable-next-line */
     expect(console.warn).toHaveBeenCalledWith(
       'Please provide a valid json config file link via the `--config` or `-c` flag'
     );
@@ -80,6 +85,7 @@ describe('ConfigReaderUtil', () => {
     spyOn(global.console, 'warn');
 
     expect(getConfigFile()).toEqual({});
+    /* eslint-disable-next-line */
     expect(console.warn).toHaveBeenCalledWith(
       'Please provide a valid json config file link via the `--config` or `-c` flag'
     );

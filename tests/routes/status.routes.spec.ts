@@ -13,7 +13,6 @@ jest.mock('../../src/handlers/status.handler', () => {
 });
 
 describe('StatusRoutes', () => {
-
   let app: any;
 
   beforeAll(() => {

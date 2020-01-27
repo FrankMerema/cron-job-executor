@@ -1,7 +1,6 @@
 import { CityHandler } from '../../src/handlers';
 
 describe('CityHandler', () => {
-
   const cityHandler = new CityHandler();
 
   const weert = {
@@ -287,18 +286,27 @@ describe('CityHandler', () => {
   };
 
   test('find 2 cities by name', async () => {
-    await expect(cityHandler.findCitiesByName('weert')).resolves.toEqual([weert, nederweert]);
+    await expect(cityHandler.findCitiesByName('weert')).resolves.toEqual([
+      weert,
+      nederweert
+    ]);
   });
 
   test('find no cities by name', async () => {
-    await expect(cityHandler.findCitiesByName('ahjsdfkadhsf')).rejects.toEqual({ error: 'No cities found for ahjsdfkadhsf' });
+    await expect(cityHandler.findCitiesByName('ahjsdfkadhsf')).rejects.toEqual({
+      error: 'No cities found for ahjsdfkadhsf'
+    });
   });
 
   test('find nederweert by id', async () => {
-    await expect(cityHandler.findCityById('2750467')).resolves.toEqual(nederweert);
+    await expect(cityHandler.findCityById('2750467')).resolves.toEqual(
+      nederweert
+    );
   });
 
   test('find no city for id 999999', async () => {
-    await expect(cityHandler.findCityById('999999')).rejects.toEqual({ error: 'No city found for 999999' });
+    await expect(cityHandler.findCityById('999999')).rejects.toEqual({
+      error: 'No city found for 999999'
+    });
   });
 });
