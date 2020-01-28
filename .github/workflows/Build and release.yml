@@ -13,11 +13,10 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.OS }}-modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.OS }}-build-${{ env.cache-name }}-
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
+            ${{ runner.OS }}-modules-${{ env.cache-name }}-
+            ${{ runner.OS }}-modules-
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
@@ -35,11 +34,17 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: node_modules
+          key: ${{ runner.OS }}-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-modules-${{ env.cache-name }}-
+            ${{ runner.OS }}-modules-
+      - uses: actions/cache@v1
+        with:
+          path: dist
           key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.OS }}-build-${{ env.cache-name }}-
             ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
       - name: Build library
         run: yarn build
   release:
@@ -51,7 +56,15 @@ jobs:
         with:
           node-version: '12.x'
           registry-url: 'https://npm.pkg.github.com'
+      - uses: actions/cache@v1
+        with:
+          path: dist
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-
+            ${{ runner.OS }}-build-
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
         run: npx semantic-release
