@@ -26,6 +26,10 @@
     "type": "git",
     "url": "git+https@github.com:FrankMerema/weather-service.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "tag": "latest"
+  },
   "author": "Frank Merema",
   "license": "MIT",
   "bugs": {
