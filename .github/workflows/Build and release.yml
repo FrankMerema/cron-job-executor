@@ -38,15 +38,15 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-modules-${{ env.cache-name }}-
             ${{ runner.OS }}-modules-
-      - uses: actions/cache@v1
-        with:
-          path: dist
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-${{ env.cache-name }}-
-            ${{ runner.OS }}-build-
       - name: Build library
         run: yarn build
+     - uses: actions/cache@v1
+       with:
+         path: dist
+         key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+         restore-keys: |
+           ${{ runner.OS }}-build-${{ env.cache-name }}-
+           ${{ runner.OS }}-build-
   release:
     runs-on: ubuntu-latest
     needs: [install, build]
