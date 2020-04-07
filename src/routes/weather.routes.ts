@@ -36,10 +36,10 @@ export class WeatherRoutes {
   private getWeatherByCityName(req: Request, res: Response): void {
     this.weatherHandler
       .fetchWeatherForCityByCityName(req.params.name)
-      .then(weather => {
+      .then((weather) => {
         res.json(weather);
       })
-      .catch(error => {
+      .catch((error) => {
         res.status(error.response.status).json(this.handleError(error));
       });
   }
@@ -47,10 +47,10 @@ export class WeatherRoutes {
   private getWeatherByCityId(req: Request, res: Response): void {
     this.weatherHandler
       .fetchWeatherForCityById(req.params.id)
-      .then(weather => {
+      .then((weather) => {
         res.json(weather);
       })
-      .catch(error => {
+      .catch((error) => {
         res.status(error.response.status).json(this.handleError(error));
       });
   }
@@ -58,10 +58,10 @@ export class WeatherRoutes {
   private getWeatherByCoordinates(req: Request, res: Response): void {
     this.weatherHandler
       .fetchWeatherForCityByCoordinates(req.params.lon, req.params.lat)
-      .then(weather => {
+      .then((weather) => {
         res.json(weather);
       })
-      .catch(error => {
+      .catch((error) => {
         res.status(error.response.status).json(this.handleError(error));
       });
   }
@@ -69,10 +69,10 @@ export class WeatherRoutes {
   private getWeatherByZip(req: Request, res: Response): void {
     this.weatherHandler
       .fetchWeatherForCityByZip(req.params.zip, req.params.country)
-      .then(weather => {
+      .then((weather) => {
         res.json(weather);
       })
-      .catch(error => {
+      .catch((error) => {
         res.status(error.response.status).json(this.handleError(error));
       });
   }

@@ -28,7 +28,7 @@ export class StatusRoutes {
   }
 
   private getStatus(req: Request, res: Response): void {
-    this.statusHandler.checkIfOpenWeatherMapIsOnline().then(status => {
+    this.statusHandler.checkIfOpenWeatherMapIsOnline().then((status) => {
       res.json(status);
     });
   }

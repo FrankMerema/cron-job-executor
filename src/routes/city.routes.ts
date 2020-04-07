@@ -27,10 +27,10 @@ export class CityRoutes {
   private getCityByCriteria(req: Request, res: Response): void {
     this.cityHandler
       .findCitiesByName(req.params.name)
-      .then(cities => {
+      .then((cities) => {
         res.json(cities);
       })
-      .catch(error => {
+      .catch((error) => {
         res.status(404).json(error);
       });
   }
@@ -38,10 +38,10 @@ export class CityRoutes {
   private getCityById(req: Request, res: Response): void {
     this.cityHandler
       .findCityById(req.params.id)
-      .then(city => {
+      .then((city) => {
         res.json(city);
       })
-      .catch(error => {
+      .catch((error) => {
         res.status(404).json(error);
       });
   }
