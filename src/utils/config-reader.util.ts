@@ -8,7 +8,7 @@ export interface Config {
 export const getConfigFile = (): Config => {
   const args = process.argv.slice(2);
   const configFileLocation = args.find(
-    arg => arg.indexOf('--config') !== -1 || arg.indexOf('-c') !== -1
+    (arg) => arg.indexOf('--config') !== -1 || arg.indexOf('-c') !== -1
   );
 
   if (configFileLocation && configFileLocation.match(/.json/g)) {
