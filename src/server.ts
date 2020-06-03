@@ -10,6 +10,10 @@ const helmet = require('helmet');
 const app = express();
 /* eslint-enable */
 
+interface LimitRequest extends Request {
+  ip: string;
+}
+
 export const start = (): void => {
   let port = 8080;
 
@@ -31,7 +35,7 @@ export const start = (): void => {
     new RateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes
       max: 100, // limit each IP to 100 requests per windowMs
-      onLimitReached: (req: Request): void => {
+      onLimitReached: (req: LimitRequest): void => {
         /* eslint-disable-next-line */
         console.error(`Received to many requests from ${req.ip}`);
       }
