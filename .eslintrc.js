@@ -9,6 +9,7 @@ module.exports = {
     project: ['tsconfig.json', 'tsconfig-test.json'],
     sourceType: 'module'
   },
+  ignorePatterns: ['.eslintrc.js'],
   plugins: ['@typescript-eslint', 'prefer-arrow'],
   extends: [
     'eslint:recommended',
