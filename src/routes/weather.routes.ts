@@ -3,6 +3,17 @@ import { Request, Response, Router } from 'express';
 import { WeatherHandler } from '../handlers';
 import { WeatherError } from '../models';
 
+interface WeatherRequest extends Request {
+  params: {
+    id?: string;
+    name?: string;
+    lon?: string;
+    lat?: string;
+    zip?: string;
+    country?: string;
+  };
+}
+
 export class WeatherRoutes {
   private readonly router: Router;
   private weatherHandler: WeatherHandler;
@@ -18,22 +29,24 @@ export class WeatherRoutes {
   }
 
   private setupRoutes(): void {
-    this.router.get('/cityName/:name', (req: Request, res: Response) =>
+    this.router.get('/cityName/:name', (req: WeatherRequest, res: Response) =>
       this.getWeatherByCityName(req, res)
     );
-    this.router.get('/cityId/:id', (req: Request, res: Response) =>
+    this.router.get('/cityId/:id', (req: WeatherRequest, res: Response) =>
       this.getWeatherByCityId(req, res)
     );
     this.router.get(
       '/cityCoordinates/:lon/:lat',
-      (req: Request, res: Response) => this.getWeatherByCoordinates(req, res)
+      (req: WeatherRequest, res: Response) =>
+        this.getWeatherByCoordinates(req, res)
     );
-    this.router.get('/cityZip/:zip/:country', (req: Request, res: Response) =>
-      this.getWeatherByZip(req, res)
+    this.router.get(
+      '/cityZip/:zip/:country',
+      (req: WeatherRequest, res: Response) => this.getWeatherByZip(req, res)
     );
   }
 
-  private getWeatherByCityName(req: Request, res: Response): void {
+  private getWeatherByCityName(req: WeatherRequest, res: Response): void {
     this.weatherHandler
       .fetchWeatherForCityByCityName(req.params.name)
       .then((weather) => {
@@ -44,7 +57,7 @@ export class WeatherRoutes {
       });
   }
 
-  private getWeatherByCityId(req: Request, res: Response): void {
+  private getWeatherByCityId(req: WeatherRequest, res: Response): void {
     this.weatherHandler
       .fetchWeatherForCityById(req.params.id)
       .then((weather) => {
@@ -55,7 +68,7 @@ export class WeatherRoutes {
       });
   }
 
-  private getWeatherByCoordinates(req: Request, res: Response): void {
+  private getWeatherByCoordinates(req: WeatherRequest, res: Response): void {
     this.weatherHandler
       .fetchWeatherForCityByCoordinates(req.params.lon, req.params.lat)
       .then((weather) => {
@@ -66,7 +79,7 @@ export class WeatherRoutes {
       });
   }
 
-  private getWeatherByZip(req: Request, res: Response): void {
+  private getWeatherByZip(req: WeatherRequest, res: Response): void {
     this.weatherHandler
       .fetchWeatherForCityByZip(req.params.zip, req.params.country)
       .then((weather) => {

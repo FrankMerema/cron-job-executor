@@ -1,6 +1,13 @@
 import { Request, Response, Router } from 'express';
 import { CityHandler } from '../handlers';
 
+interface CityRequest extends Request {
+  params: {
+    id?: string;
+    name?: string;
+  };
+}
+
 export class CityRoutes {
   private readonly router: Router;
   private cityHandler: CityHandler;
@@ -16,15 +23,15 @@ export class CityRoutes {
   }
 
   private setupRoutes(): void {
-    this.router.get('/name/:name', (req: Request, res: Response) =>
+    this.router.get('/name/:name', (req: CityRequest, res: Response) =>
       this.getCityByCriteria(req, res)
     );
-    this.router.get('/id/:id', (req: Request, res: Response) =>
+    this.router.get('/id/:id', (req: CityRequest, res: Response) =>
       this.getCityById(req, res)
     );
   }
 
-  private getCityByCriteria(req: Request, res: Response): void {
+  private getCityByCriteria(req: CityRequest, res: Response): void {
     this.cityHandler
       .findCitiesByName(req.params.name)
       .then((cities) => {
@@ -35,7 +42,7 @@ export class CityRoutes {
       });
   }
 
-  private getCityById(req: Request, res: Response): void {
+  private getCityById(req: CityRequest, res: Response): void {
     this.cityHandler
       .findCityById(req.params.id)
       .then((city) => {
