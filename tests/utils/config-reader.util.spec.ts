@@ -6,6 +6,7 @@ jest.unmock('../../src/utils/config-reader.util');
 describe('ConfigReaderUtil', () => {
   process.argv = ['node', 'filename', '--config="service.config.json"'];
 
+  /* eslint-disable-next-line  @typescript-eslint/no-var-requires */
   const pathResolve = require('path').resolve;
 
   afterEach(() => {

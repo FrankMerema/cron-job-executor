@@ -3,6 +3,7 @@ import { StatusHandler } from '../../src/handlers';
 jest.mock('@frankmerema/is-port-reachable');
 
 describe('StatusHandler', () => {
+  /* eslint-disable-next-line  @typescript-eslint/no-var-requires */
   const isPortReachable = require('@frankmerema/is-port-reachable')
     .isPortReachable;
   const statusHandler = new StatusHandler();

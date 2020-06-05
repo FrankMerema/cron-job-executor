@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-/* tslint:disable */
+/* eslint-disable-next-line */
 require('../src/server').start();
