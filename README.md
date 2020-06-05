@@ -1,5 +1,5 @@
 # Weather service
-[![CircleCI](https://circleci.com/gh/FrankMerema/weather-service.svg?style=svg)](https://circleci.com/gh/FrankMerema/weather-service) [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
+![Build and release](https://github.com/FrankMerema/weather-service/workflows/Build%20and%20release/badge.svg?branch=master) [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
 
 This service is build for running a express service for the weather api [openweathermap.org](https://openweathermap.org/).
 
