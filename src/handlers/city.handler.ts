@@ -2,6 +2,7 @@ import { City } from '../models';
 
 export class CityHandler {
   findCitiesByName(name: string): Promise<City[]> {
+    /* eslint-disable-next-line */
     const cities = require('../assets/current.city.list.min.json') as City[];
 
     return new Promise((resolve, reject) => {
@@ -17,6 +18,7 @@ export class CityHandler {
   }
 
   findCityById(cityId: string): Promise<City> {
+    /* eslint-disable-next-line */
     const cities = require('../assets/current.city.list.min.json') as City[];
 
     return new Promise((resolve, reject) => {
