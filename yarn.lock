@@ -265,10 +265,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@frankmerema/is-port-reachable@1.0.5":
-  version "1.0.5"
-  resolved "https://npm.pkg.github.com/download/@frankmerema/is-port-reachable/1.0.5/0e6cf9a828a968b855c549f60f35c86dda839d7ff7acff5fbb819a52c8b9b73a#63177d8cad38e1042c53321824d21300b75b67d0"
-  integrity sha512-O9KZLkxS0A2OwqqmEZlBszVdbjyttgSegb5Wm+rO/SxvSJk6d7WaQF500H+UHgSxiklYBm/xh5+OSCc3h/DKxw==
+"@frankmerema/is-port-reachable@1.0.6":
+  version "1.0.6"
+  resolved "https://npm.pkg.github.com/download/@frankmerema/is-port-reachable/1.0.6/6a78e3e44a4d95d2a09a69eac8c9e5abc45e5394333d4b97ed5bd3a20de27673#d48d07de268def4847957d66ae484c68daf7a130"
+  integrity sha512-5cKTgaZg2dlXMsqAM7v62DFpbdDze3iyUg3FYAZvS4HIAUha8QLLYn8f6qHELV9so/wqNToAwTZyC3BkSJSpxw==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
