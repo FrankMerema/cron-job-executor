@@ -29,19 +29,19 @@ export class WeatherRoutes {
   }
 
   private setupRoutes(): void {
-    this.router.get('/cityName/:name', (req: WeatherRequest, res: Response) =>
+    this.router.get('/city/name/:name', (req: WeatherRequest, res: Response) =>
       this.getWeatherByCityName(req, res)
     );
-    this.router.get('/cityId/:id', (req: WeatherRequest, res: Response) =>
+    this.router.get('/city/id/:id', (req: WeatherRequest, res: Response) =>
       this.getWeatherByCityId(req, res)
     );
     this.router.get(
-      '/cityCoordinates/:lon/:lat',
+      '/city/coordinates/:lon/:lat',
       (req: WeatherRequest, res: Response) =>
         this.getWeatherByCoordinates(req, res)
     );
     this.router.get(
-      '/cityZip/:zip/:country',
+      '/city/zip/:zip/:country',
       (req: WeatherRequest, res: Response) => this.getWeatherByZip(req, res)
     );
   }

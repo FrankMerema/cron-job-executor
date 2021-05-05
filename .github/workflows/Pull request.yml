@@ -16,11 +16,10 @@ jobs:
             ${{ runner.OS }}-
       - uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '14'
           registry-url: 'https://npm.pkg.github.com'
       - name: Install dependencies
-        run: |
-          yarn install
+        run: yarn install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
   linting:

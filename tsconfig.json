@@ -19,6 +19,6 @@
   "exclude": [
     "tests",
     "coverage",
-    "jest.config.js"
+    "jest.config"
   ]
 }

@@ -13,12 +13,7 @@ module.exports = {
     '^.+\\.(t|j)s$': 'ts-jest'
   },
   collectCoverage: true,
-  collectCoverageFrom: [
-    '!**/index.ts',
-    '!**/start.ts',
-    '!**/server.ts',
-    '**/*.ts'
-  ],
+  collectCoverageFrom: ['<rootDir>/src/**/*.ts', '!<rootDir>/src/**/index.ts'],
   coverageDirectory: './coverage/jest/lcov',
   testEnvironment: 'node'
 };
