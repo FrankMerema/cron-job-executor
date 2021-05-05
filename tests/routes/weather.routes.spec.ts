@@ -87,25 +87,25 @@ describe('WeatherRoutes', () => {
 
   describe('fetch weather', () => {
     describe('successful', () => {
-      test('via /cityName/:name endpoint', async () => {
-        const response = await request(app).get('/api/weather/cityName/weert');
+      test('via /city/name/:name endpoint', async () => {
+        const response = await request(app).get('/api/weather/city/name/weert');
 
         expect(fetchWeatherForCityByCityNameMock).toHaveBeenCalledWith('weert');
         expect(response.status).toEqual(200);
         expect(response.body).toEqual(weatherResult);
       });
 
-      test('via /cityId/:id endpoint', async () => {
-        const response = await request(app).get('/api/weather/cityId/2744911');
+      test('via /city/id/:id endpoint', async () => {
+        const response = await request(app).get('/api/weather/city/id/2744911');
 
         expect(fetchWeatherForCityByIdMock).toHaveBeenCalledWith('2744911');
         expect(response.status).toEqual(200);
         expect(response.body).toEqual(weatherResult);
       });
 
-      test('via /cityCoordinates/:lon/:lat endpoint', async () => {
+      test('via /city/coordinates/:lon/:lat endpoint', async () => {
         const response = await request(app).get(
-          '/api/weather/cityCoordinates/5.70694/51.251671'
+          '/api/weather/city/coordinates/5.70694/51.251671'
         );
 
         expect(fetchWeatherForCityByCoordinatesMock).toHaveBeenCalledWith(
@@ -116,8 +116,10 @@ describe('WeatherRoutes', () => {
         expect(response.body).toEqual(weatherResult);
       });
 
-      test('via /cityZip/:zip/:country endpoint', async () => {
-        const response = await request(app).get('/api/weather/cityZip/6002/nl');
+      test('via /city/zip/:zip/:country endpoint', async () => {
+        const response = await request(app).get(
+          '/api/weather/city/zip/6002/nl'
+        );
 
         expect(fetchWeatherForCityByZipMock).toHaveBeenCalledWith('6002', 'nl');
         expect(response.status).toEqual(200);
@@ -163,8 +165,8 @@ describe('WeatherRoutes', () => {
         fetchWeatherForCityByZipMock.mockRejectedValueOnce(customRes401);
       });
 
-      test('via /cityName/:name endpoint', async () => {
-        const response = await request(app).get('/api/weather/cityName/weert');
+      test('via /city/name/:name endpoint', async () => {
+        const response = await request(app).get('/api/weather/city/name/weert');
 
         expect(fetchWeatherForCityByCityNameMock).toHaveBeenCalledWith('weert');
         expect(response.status).toEqual(404);
@@ -175,8 +177,8 @@ describe('WeatherRoutes', () => {
         });
       });
 
-      test('via /cityId/:id endpoint', async () => {
-        const response = await request(app).get('/api/weather/cityId/2744911');
+      test('via /city/id/:id endpoint', async () => {
+        const response = await request(app).get('/api/weather/city/id/2744911');
 
         expect(fetchWeatherForCityByIdMock).toHaveBeenCalledWith('2744911');
         expect(response.status).toEqual(404);
@@ -187,9 +189,9 @@ describe('WeatherRoutes', () => {
         });
       });
 
-      test('via /cityCoordinates/:lon/:lat endpoint', async () => {
+      test('via /city/coordinates/:lon/:lat endpoint', async () => {
         const response = await request(app).get(
-          '/api/weather/cityCoordinates/5.70694/51.251671'
+          '/api/weather/city/coordinates/5.70694/51.251671'
         );
 
         expect(fetchWeatherForCityByCoordinatesMock).toHaveBeenCalledWith(
@@ -205,8 +207,10 @@ describe('WeatherRoutes', () => {
         });
       });
 
-      test('via /cityZip/:zip/:country endpoint', async () => {
-        const response = await request(app).get('/api/weather/cityZip/6002/nl');
+      test('via /city/zip/:zip/:country endpoint', async () => {
+        const response = await request(app).get(
+          '/api/weather/city/zip/6002/nl'
+        );
 
         expect(fetchWeatherForCityByZipMock).toHaveBeenCalledWith('6002', 'nl');
         expect(response.status).toEqual(401);
