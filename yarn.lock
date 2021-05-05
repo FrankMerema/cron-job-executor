@@ -317,10 +317,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@frankmerema/is-port-reachable@1.0.6":
-  version "1.0.6"
-  resolved "https://npm.pkg.github.com/download/@frankmerema/is-port-reachable/1.0.6/6a78e3e44a4d95d2a09a69eac8c9e5abc45e5394333d4b97ed5bd3a20de27673#d48d07de268def4847957d66ae484c68daf7a130"
-  integrity sha512-5cKTgaZg2dlXMsqAM7v62DFpbdDze3iyUg3FYAZvS4HIAUha8QLLYn8f6qHELV9so/wqNToAwTZyC3BkSJSpxw==
+"@frankmerema/is-port-reachable@1.1.0":
+  version "1.1.0"
+  resolved "https://npm.pkg.github.com/download/@frankmerema/is-port-reachable/1.1.0/21c1aa56a79462422bc6f3f1ff16ead316388eecf359ff8e85d6972e4bfebb51#2b622ed33a9d2035233cef76faa8dcd56c7862ac"
+  integrity sha512-DrGcyxxnf2Q/A/p6Iqhzr/5cbgC24/U5OSL4C6NFoXplNJH0Oh1L2NiTCQ9TIqqT7GS6XWVGWvd5x6KQpW+b5A==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
